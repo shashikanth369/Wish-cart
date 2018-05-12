@@ -1,0 +1,36 @@
+spring:
+    datasource:
+        driver-class-name: 'oracle.jdbc.driver.OracleDriver'
+        url: 'jdbc:oracle:thin:@localhost:1521:xe'
+        username: 'my_db'
+        password: 'shashi'
+
+wishcart:
+    http:
+        version:
+    cache:
+        hazelcast:
+            time-to-live-seconds: 3600
+            backup-count: 1
+            management-center:
+                enabled: false
+                update-interval: 3
+                url: http://localhost:8180/mancenter
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+logging:
+    level:
+        org.hibernate.SQL: debug

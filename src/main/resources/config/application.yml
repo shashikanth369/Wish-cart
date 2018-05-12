@@ -1,0 +1,49 @@
+server:
+    port: 8443
+    servlet:
+        context-path: '/api'
+
+
+management:
+    sever:
+        port: '8443'
+    security:
+        enabled: false
+
+spring:
+    user:
+        name: 'shashi'
+        password: 'shashi'
+    security:
+        enabled: false
+    application:
+        name: cricket
+
+wishcart:
+    async:
+        core-pool-size: 2
+        max-pool-size: 50
+        queue-capacity: 10000
+        # By default CORS is disabled. Uncomment to enable.
+        #cors:
+            #allowed-origins: "*"
+            #allowed-methods: "*"
+            #allowed-headers: "*"
+            #exposed-headers: "Link,X-Total-Count"
+            #allow-credentials: true
+            #max-age: 1800
+    mail:
+        from: wish-cart@localhost
+        swagger:
+            default-include-pattern: /api/.*
+            title: Wish Cart API
+            description: Wish-Cart API documentation
+            version: 0.0.1
+            terms-of-service-url:
+            contact-name:
+            contact-url:
+            contact-email:
+            license:
+            license-url:
+        ribbon:
+            display-on-active-profiles: dev
