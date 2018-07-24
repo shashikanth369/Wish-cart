@@ -1,7 +1,11 @@
 buildscript {
 	ext {
 		springBootVersion = '2.0.2.RELEASE'
+		jaxbTargetDir = file("src/main/java/com/wishcart/wishcart/generated")
 	}
+    configurations {
+        xsd2java
+    }
 	repositories {
 		mavenCentral()
 	}
@@ -22,7 +26,28 @@ sourceCompatibility = 1.8
 repositories {
 	mavenCentral()
 }
+dependencies{
+    xsd2java "com.sun.xml.bind:jaxb-xjc:2.2.6"
+    xsd2java "com.sun.xml.bind:jaxb-impl:2.2.6"
+}
 
+task xsd2java() {
+
+    doLast {
+        jaxbTargetDir.mkdirs()
+
+        ant.taskdef(name: 'xjc', classname: 'com.sun.tools.xjc.XJCTask', classpath: configurations.xsd2java.asPath)
+        ant.jaxbTargetDir = jaxbTargetDir
+
+
+        ant.xjc(
+                destdir: '${jaxbTargetDir}',
+                package: 'external',
+                schema: 'src/main/resources/schema/product.xsd'
+        )
+
+    }
+}
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-actuator')
@@ -34,12 +59,14 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-web-services')
 	compile('org.springframework.boot:spring-boot-starter-websocket')
+    compile('org.springframework.boot:spring-boot-starter-activemq')
 	compile ('org.mapstruct:mapstruct:1.1.0.Final')
 	compile ('org.mapstruct:mapstruct-processor:1.1.0.Final')
 	compile('org.springframework.session:spring-session-jdbc')
 	compile "com.hazelcast:hazelcast"
 	compile "com.hazelcast:hazelcast-hibernate52"
 	compile "com.hazelcast:hazelcast-spring"
+    compile ('org.apache.activemq:activemq-jms-client:6.0.0')
 	runtime('org.springframework.boot:spring-boot-devtools')
 	runtime('com.h2database:h2')
     runtime files('src/main/resources/utilities/ojdbc6.jar')
