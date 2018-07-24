@@ -3,6 +3,8 @@ server:
     servlet:
         context-path: '/api'
 
+activemq:
+        broker-url: 'tcp://localhost:61616'
 
 management:
     sever:
@@ -20,10 +22,10 @@ spring:
         name: cricket
 
 wishcart:
-    async:
-        core-pool-size: 2
-        max-pool-size: 50
-        queue-capacity: 10000
+   #async:
+        #core-pool-size: 2
+        #max-pool-size: 50
+        #queue-capacity: 10000
         # By default CORS is disabled. Uncomment to enable.
         #cors:
             #allowed-origins: "*"
@@ -32,18 +34,18 @@ wishcart:
             #exposed-headers: "Link,X-Total-Count"
             #allow-credentials: true
             #max-age: 1800
-    mail:
-        from: wish-cart@localhost
-        swagger:
-            default-include-pattern: /api/.*
-            title: Wish Cart API
-            description: Wish-Cart API documentation
-            version: 0.0.1
-            terms-of-service-url:
-            contact-name:
-            contact-url:
-            contact-email:
-            license:
-            license-url:
-        ribbon:
-            display-on-active-profiles: dev
+    #mail:
+        #from: wish-cart@localhost
+        #swagger:
+            #default-include-pattern: /api/.*
+            #title: Wish Cart API
+            #description: Wish-Cart API documentation
+            #version: 0.0.1
+            #terms-of-service-url:
+            #contact-name:
+            #contact-url:
+            #contact-email:
+            #license:
+            #license-url:
+        #ribbon:
+            #display-on-active-profiles: dev
