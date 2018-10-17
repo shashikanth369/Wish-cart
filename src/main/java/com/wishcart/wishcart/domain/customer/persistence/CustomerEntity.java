@@ -16,7 +16,8 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "CUSTOMER")
-public class CustomerEntity implements Serializable{
+public class
+CustomerEntity implements Serializable{
     @Id
     @GeneratedValue(generator = "CUSTOMER_ID_SEQ", strategy = GenerationType.SEQUENCE)
     @SequenceGenerator(name = "CUSTOMER_ID_SEQ", sequenceName = "CUSTOMER_ID_SEQ",allocationSize=1)
@@ -44,12 +45,4 @@ public class CustomerEntity implements Serializable{
     @JoinColumn(name = "CART_ID")
     private CartEntity cartEntity;
 
-    @OneToMany(mappedBy = "customerCard")
-    private List<CardEntity> cards = new ArrayList<>();
-
-    @OneToMany(mappedBy = "customerPurchase")
-    private List<PurchaseEntity> purchases = new ArrayList<>();
-
-    @OneToMany(mappedBy = "customerAddress")
-    private List<AddressEntity> addresses = new ArrayList<>();
 }

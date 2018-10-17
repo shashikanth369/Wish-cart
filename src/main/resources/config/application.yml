@@ -3,23 +3,21 @@ server:
     servlet:
         context-path: '/api'
 
-activemq:
-        broker-url: 'tcp://localhost:61616'
 
 management:
     sever:
         port: '8443'
-    security:
-        enabled: false
+    #security:
+        #enabled: false
 
 spring:
     user:
         name: 'shashi'
         password: 'shashi'
-    security:
-        enabled: false
+    #security:
+        #enabled: false
     application:
-        name: cricket
+        name: Wishcart
 
 wishcart:
    #async:
