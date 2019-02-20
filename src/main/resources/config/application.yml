@@ -11,6 +11,13 @@ management:
         #enabled: false
 
 spring:
+    datasource:
+        url: 'jdbc:oracle:thin:@localhost:1521:XE'
+        username: 'my_db'
+        password: 'shashi'
+    jpa:
+        database-platform: org.hibernate.dialect.Oracle10gDialect
+        database: oracle
     user:
         name: 'shashi'
         password: 'shashi'
@@ -20,6 +27,18 @@ spring:
         name: Wishcart
 
 wishcart:
+    dbdetails:
+        #driver-class-name: 'oracle.jdbc.driver.OracleDriver'
+        url: 'jdbc:oracle:thin:@localhost:1521/XE'
+        username: 'my_db'
+        password: 'shashi'
+        dataSourceProperties:
+          maximumPoolSize: 10
+          minimumIdle: 2
+          cachePrepStmts: true
+          prepStmtCacheSize: 256
+          prepStmtCacheSqlLimit: 2048
+          seServerPrepStmts: true
    #async:
         #core-pool-size: 2
         #max-pool-size: 50

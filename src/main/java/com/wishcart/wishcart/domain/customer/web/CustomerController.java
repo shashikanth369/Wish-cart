@@ -29,7 +29,6 @@ public class CustomerController {
     @NonNull
     private CustomerService customerService;
 
-
     @GetMapping("/customers")
     public List<CustomerEntity> allCustomers(){
         return customerService.getAllCustomers();

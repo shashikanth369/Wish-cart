@@ -76,7 +76,6 @@ dependencies {
     runtime files('src/main/resources/utilities/ojdbc6.jar')
 	compileOnly('org.projectlombok:lombok')
     compileOnly "org.springframework.boot:spring-boot-configuration-processor"
-
 	testCompile('org.springframework.boot:spring-boot-test')
     testCompile ('org.assertj:assertj-core')
     testCompile ('junit:junit')
