@@ -4,14 +4,12 @@ import com.wishcart.wishcart.domain.address.service.AddressService;
 import com.wishcart.wishcart.domain.customer.persistence.CustomerRepository;
 import com.wishcart.wishcart.domain.customer.service.CustomerService;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.security.core.parameters.P;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,11 +20,11 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.nullable;
 import static org.mockito.Mockito.*;
 
-//@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 
 public class customerServiceTests {
 
-    /*@InjectMocks
+    @InjectMocks
      CustomerService customerService;
     @Mock
      AddressService addressService;
@@ -34,19 +32,20 @@ public class customerServiceTests {
     @Mock
      CustomerRepository customerRepository;
     List<String> mock = mock(List.class);
-    @BeforeEach
+
+/*    @BeforeEach
     void setup(){
 
         MockitoAnnotations.initMocks(this);
-    }
+    }*/
 
     @Test
     public void test(){
-        when(addressService.someInt()).thenReturn(new ArrayList<>(Arrays.asList(12, 13, 14)));
+       /* when(addressService.someInt()).thenReturn(new ArrayList<>(Arrays.asList(12, 13, 14)));
         customerService.setAddressService(addressService);
         int sum = customerService.sumInt();
         assertEquals(39, sum);
-
+*/
     }
     @Test
     public void  testList(){
@@ -87,7 +86,6 @@ public class customerServiceTests {
     @Test
     public void spying(){
         List arrayListMock = mock(ArrayList.class);
-
-    }*/
+    }
 
 }

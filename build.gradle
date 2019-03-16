@@ -1,6 +1,6 @@
 buildscript {
 	ext {
-		springBootVersion = '2.0.2.RELEASE'
+		springBootVersion = '2.1.2.RELEASE'
 		jaxbTargetDir = file("src/main/java/com/wishcart/wishcart/generated")
 	}
     configurations {
@@ -15,7 +15,6 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
@@ -81,6 +80,7 @@ dependencies {
     testCompile ('junit:junit')
     testCompile ('org.mockito:mockito-core')
     testCompile ('com.github.springtestdbunit:spring-test-dbunit:1.0.1')
+    testCompile ('org.springframework.security:spring-security-test')
     testCompile('org.dbunit:dbunit:2.4.9')
     testCompile "org.hamcrest:hamcrest-library"
 	testCompile('org.springframework.boot:spring-boot-starter-test')

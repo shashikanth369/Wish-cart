@@ -14,12 +14,12 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-/*@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)
 @WebMvcTest(CustomerController.class)
-@Import(PersistenceConfig.class)*/
+@Import(PersistenceConfig.class)
 public class CustomerControllerTest {
 
- /*   @Autowired
+    @Autowired
     private MockMvc mockMvc;
 
     @Test
@@ -29,5 +29,5 @@ public class CustomerControllerTest {
                                         .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         System.out.println(mvcResult.getResponse().getContentAsString());
-    }*/
+    }
 }

@@ -59,7 +59,7 @@ public class DatabaseConfiguration {
             this.configuration = configuration;
             this.jdbcUrl = configuration.getUrl();
             this.driver = new OracleDriver();
-            driverProperties.setProperty("user", configuration.getUsername());
+            driverProperties.setProperty("User", configuration.getUsername());
             driverProperties.setProperty("password", configuration.getPassword());
             for(Map.Entry<Object, Object> entry: configuration.getDataSourceProperties().entrySet()){
                 driverProperties.setProperty(entry.getKey().toString(), entry.getValue().toString());
@@ -74,7 +74,7 @@ public class DatabaseConfiguration {
         @Override
         public Connection getConnection(String username, String password) throws SQLException {
            Properties properties = new Properties(driverProperties);
-           properties.setProperty("user", username);
+           properties.setProperty("User", username);
            properties.setProperty("password", password);
            return getConnection(properties);
         }

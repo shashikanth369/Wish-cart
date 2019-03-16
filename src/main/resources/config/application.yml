@@ -1,7 +1,13 @@
 server:
+    ssl:
+      key-store: 'C:\Program Files\Java\jdk1.8.0_152\bin\keystore.p12'
+      key-store-type: PKCS12
+      key-alias: tomcat
+      key-store-password: 'shashi'
     port: 8443
     servlet:
         context-path: '/api'
+
 
 
 management:
@@ -11,6 +17,8 @@ management:
         #enabled: false
 
 spring:
+    session:
+      store-type: jdbc
     datasource:
         url: 'jdbc:oracle:thin:@localhost:1521:XE'
         username: 'my_db'

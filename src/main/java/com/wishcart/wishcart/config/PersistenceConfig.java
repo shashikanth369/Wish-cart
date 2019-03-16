@@ -72,7 +72,7 @@ public class PersistenceConfig {
 
         protected Map<String, Object> getHibernateProperties(final String schemaBame){
             Map<String, Object> vendorProperties = new LinkedHashMap<>();
-            vendorProperties.putAll(getJpaProperties().getHibernateProperties(new HibernateSettings()));
+            vendorProperties.putAll(getJpaProperties().getProperties());
             return vendorProperties;
         }
 
