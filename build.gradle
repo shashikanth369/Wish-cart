@@ -2,31 +2,46 @@ buildscript {
     repositories {
         jcenter()
         mavenCentral()
-        dependencies{
-            classpath (group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '4.4.0')
-        }
+         dependencies{
+             classpath (group: 'org.jfrog.buildinfo', name: 'build-info-extractor-gradle', version: '4.4.0')
+         }
     }
 
-	ext {
-		springBootVersion = '2.1.2.RELEASE'
-		jaxbTargetDir = file("src/main/java/com/wishcart/wishcart/generated")
-	}
+    ext {
+        springBootVersion = '2.1.2.RELEASE'
+        jaxbTargetDir = file("src/main/java/com/wishcart/wishcart/generated")
+    }
     configurations {
         xsd2java
     }
     dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+repositories {
+    jcenter()
+    mavenCentral()
 }
 
 apply plugin: 'java'
 apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'maven-publish'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
 group = 'com.wishcart'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
+
+publishing{
+    publications {
+        maven(MavenPublication)  {
+            groupId = project.name
+            artifactId = project.getName()
+            artifact("$buildDir/libs/${project.getName()}-${version}.jar")
+        }
+    }
+}
 
 artifactory {
     contextUrl = 'http://localhost:8081/artifactory'
@@ -71,35 +86,35 @@ task xsd2java() {
     }
 }
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-actuator')
-	compile('org.springframework.boot:spring-boot-starter-cache')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    compile('org.springframework.boot:spring-boot-starter-cache')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.springframework.boot:spring-boot-starter-hateoas')
-	compile('org.springframework.boot:spring-boot-starter-integration')
-	compile('org.springframework.boot:spring-boot-starter-validation')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	compile('org.springframework.boot:spring-boot-starter-web-services')
-	compile('org.springframework.boot:spring-boot-starter-websocket')
-	compile 'org.springframework.boot:spring-boot-starter-amqp'
+    compile('org.springframework.boot:spring-boot-starter-integration')
+    compile('org.springframework.boot:spring-boot-starter-validation')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-web-services')
+    compile('org.springframework.boot:spring-boot-starter-websocket')
+    compile 'org.springframework.boot:spring-boot-starter-amqp'
     //compile('org.springframework.boot:spring-boot-starter-activemq')
-	compile("org.springframework.boot:spring-boot-starter-security")
-	compile("org.springframework.boot:spring-boot-starter-actuator")
-	compile ('org.mapstruct:mapstruct:1.1.0.Final')
-	compile ('org.mapstruct:mapstruct-processor:1.1.0.Final')
-	compile('org.springframework.session:spring-session-jdbc')
-	compile "com.hazelcast:hazelcast"
-	compile "com.hazelcast:hazelcast-hibernate52"
-	compile "com.hazelcast:hazelcast-spring"
-	compile "io.springfox:springfox-swagger2:2.4.0"
-	compile "io.springfox:springfox-swagger-ui:2.4.0"
-	//compile "com.oracle:ojdbc7"
+    compile("org.springframework.boot:spring-boot-starter-security")
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile ('org.mapstruct:mapstruct:1.1.0.Final')
+    compile ('org.mapstruct:mapstruct-processor:1.1.0.Final')
+    compile('org.springframework.session:spring-session-jdbc')
+    compile "com.hazelcast:hazelcast"
+    compile "com.hazelcast:hazelcast-hibernate52"
+    compile "com.hazelcast:hazelcast-spring"
+    compile "io.springfox:springfox-swagger2:2.4.0"
+    compile "io.springfox:springfox-swagger-ui:2.4.0"
+    //compile "com.oracle:ojdbc7"
     //compile ('org.apache.activemq:activemq-all:5.4.2')
-	runtime('org.springframework.boot:spring-boot-devtools')
-	runtime('com.h2database:h2')
+    runtime('org.springframework.boot:spring-boot-devtools')
+    runtime('com.h2database:h2')
     runtime files('src/main/resources/utilities/ojdbc6.jar')
-	compileOnly('org.projectlombok:lombok')
+    compileOnly('org.projectlombok:lombok')
     compileOnly "org.springframework.boot:spring-boot-configuration-processor"
-	testCompile('org.springframework.boot:spring-boot-test')
+    testCompile('org.springframework.boot:spring-boot-test')
     testCompile ('org.assertj:assertj-core')
     testCompile ('junit:junit')
     testCompile ('org.mockito:mockito-core')
@@ -107,6 +122,6 @@ dependencies {
     testCompile ('org.springframework.security:spring-security-test')
     testCompile('org.dbunit:dbunit:2.4.9')
     testCompile "org.hamcrest:hamcrest-library"
-	testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
 }
