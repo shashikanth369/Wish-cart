@@ -1,7 +1,5 @@
 package com.wishcart.wishcart.config;
 
-import com.wishcart.wishcart.domain.customer.persistence.CustomerRepository;
-import com.wishcart.wishcart.domain.customer.service.CustomerService;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -21,84 +19,85 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.wishcart.wishcart.domain.customer.service.CustomerService;
+
 @Configuration
 @EnableRabbit
 public class RabbitMqConfig {
 
-    public static final String DEMO_TOPIC = "demo-topic";
-    public static final String DEMO_QUEUE = "demo-queue";
-    private static final String ROUTING_KEY = "route_key";
+	public static final String DEMO_TOPIC = "demo-topic";
 
-    @Autowired
-    private ApplicationContext context;
+	public static final String DEMO_QUEUE = "demo-queue";
 
-    @Autowired
-    private RabbitProperties properties;
+	private static final String ROUTING_KEY = "route_key";
 
-    @Bean
-    public TopicExchange demoExchange(){
-        return new TopicExchange(DEMO_TOPIC);
-    }
+	@Autowired
+	private ApplicationContext context;
 
-    @Bean
-    public Queue demoQueue(){
-        return new Queue(DEMO_QUEUE);
-    }
+	@Autowired
+	private RabbitProperties properties;
 
-    @Bean
-    public Binding demoBinding(){
-        return BindingBuilder.bind(demoQueue()).to(demoExchange()).with(ROUTING_KEY);
-    }
+	@Bean
+	public TopicExchange demoExchange() {
+		return new TopicExchange(DEMO_TOPIC);
+	}
 
-    @Bean
-    public MessageConverter jsonMessageConverter()
-    {
-        return new Jackson2JsonMessageConverter();
-    }
-    @Bean
-    public CachingConnectionFactory connectionFactory()
-    {
-        CachingConnectionFactory connectionFactory = new CachingConnectionFactory(properties.getHost());
-        connectionFactory.setUsername(properties.getUsername());
-        connectionFactory.setPassword(properties.getPassword());
-        connectionFactory.setRequestedHeartBeat(10);
-        return connectionFactory;
-    }
+	@Bean
+	public Queue demoQueue() {
+		return new Queue(DEMO_QUEUE);
+	}
 
-    @Bean
-    MessageListenerAdapter listenerAdapter(CustomerService receiver) {
-        return new MessageListenerAdapter(receiver, "receiveMessage");
-    }
+	@Bean
+	public Binding demoBinding() {
+		return BindingBuilder.bind(demoQueue()).to(demoExchange()).with(ROUTING_KEY);
+	}
 
-    @Bean
-    public SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
-                                                    MessageListenerAdapter listenerAdapter) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(DEMO_QUEUE);
-        container.setMessageListener(listenerAdapter);
-        container.setMessageConverter(jsonMessageConverter());
-        container.setApplicationContext(context);
-        return container;
-    }
+	@Bean
+	public MessageConverter jsonMessageConverter() {
+		return new Jackson2JsonMessageConverter();
+	}
 
+	@Bean
+	public CachingConnectionFactory connectionFactory() {
+		CachingConnectionFactory connectionFactory = new CachingConnectionFactory(properties.getHost());
+		connectionFactory.setUsername(properties.getUsername());
+		connectionFactory.setPassword(properties.getPassword());
+		connectionFactory.setRequestedHeartBeat(10);
+		return connectionFactory;
+	}
 
-    @Bean
-    public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory() {
-        SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
-        factory.setConnectionFactory(connectionFactory());
-        factory.setApplicationContext(context);
-        factory.setConcurrentConsumers(10);
-        factory.setMaxConcurrentConsumers(10);
-        factory.setMessageConverter(jsonMessageConverter());
-        return factory;
-    }
+	@Bean
+	MessageListenerAdapter listenerAdapter(CustomerService receiver) {
+		return new MessageListenerAdapter(receiver, "receiveMessage");
+	}
 
-    @Bean
-    public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory)
-    {
-        RabbitTemplate template = new RabbitTemplate(connectionFactory);
-        template.setMessageConverter(jsonMessageConverter());
-        return template;
-    }
+	@Bean
+	public SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
+			MessageListenerAdapter listenerAdapter) {
+		SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+		container.setConnectionFactory(connectionFactory);
+		container.setQueueNames(DEMO_QUEUE);
+		container.setMessageListener(listenerAdapter);
+		container.setMessageConverter(jsonMessageConverter());
+		container.setApplicationContext(context);
+		return container;
+	}
+
+	@Bean
+	public SimpleRabbitListenerContainerFactory rabbitListenerContainerFactory() {
+		SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+		factory.setConnectionFactory(connectionFactory());
+		factory.setApplicationContext(context);
+		factory.setConcurrentConsumers(10);
+		factory.setMaxConcurrentConsumers(10);
+		factory.setMessageConverter(jsonMessageConverter());
+		return factory;
+	}
+
+	@Bean
+	public RabbitTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+		RabbitTemplate template = new RabbitTemplate(connectionFactory);
+		template.setMessageConverter(jsonMessageConverter());
+		return template;
+	}
 }

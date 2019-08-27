@@ -1,0 +1,17 @@
+apply plugin: 'java'
+apply plugin: 'com.diffplug.gradle.spotless'
+spotless {
+    java {
+        target '**/*.java'
+        target 'src/**/*.java'
+        importOrder 'java', 'javax', 'org', 'com'
+        eclipseFormatFile "$rootDir/eclipseFormatter.xml"
+        removeUnusedImports()
+    }
+    format 'misc', {
+        target 'src/**/*.md', 'src/**/*.xml', 'src/**/*.xsd', 'src/**/*.xsl'
+        indentWithSpaces()
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+}

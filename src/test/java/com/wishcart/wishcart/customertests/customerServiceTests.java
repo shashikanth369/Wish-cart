@@ -1,91 +1,91 @@
 package com.wishcart.wishcart.customertests;
 
-import com.wishcart.wishcart.domain.address.service.AddressService;
-import com.wishcart.wishcart.domain.customer.persistence.CustomerRepository;
-import com.wishcart.wishcart.domain.customer.service.CustomerService;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.nullable;
-import static org.mockito.Mockito.*;
+import com.wishcart.wishcart.domain.address.service.AddressService;
+import com.wishcart.wishcart.domain.customer.persistence.CustomerRepository;
+import com.wishcart.wishcart.domain.customer.service.CustomerService;
 
 @RunWith(MockitoJUnitRunner.class)
 
 public class customerServiceTests {
 
-    @InjectMocks
-     CustomerService customerService;
-    @Mock
-     AddressService addressService;
+	@InjectMocks
+	CustomerService customerService;
 
-    @Mock
-     CustomerRepository customerRepository;
-    List<String> mock = mock(List.class);
+	@Mock
+	AddressService addressService;
 
-/*    @BeforeEach
-    void setup(){
+	@Mock
+	CustomerRepository customerRepository;
 
-        MockitoAnnotations.initMocks(this);
-    }*/
+	List<String> mock = mock(List.class);
 
-    @Test
-    public void test(){
-       /* when(addressService.someInt()).thenReturn(new ArrayList<>(Arrays.asList(12, 13, 14)));
-        customerService.setAddressService(addressService);
-        int sum = customerService.sumInt();
-        assertEquals(39, sum);
-*/
-    }
-    @Test
-    public void  testList(){
+	/*
+	 * @BeforeEach void setup(){
+	 * 
+	 * MockitoAnnotations.initMocks(this); }
+	 */
 
-        when(mock.size()).thenReturn(5).thenReturn(10);
-        assertEquals(5, mock.size());
-        assertEquals(10, mock.size());
-    }
+	@Test
+	public void test() {
+		/*
+		 * when(addressService.someInt()).thenReturn(new ArrayList<>(Arrays.asList(12, 13, 14)));
+		 * customerService.setAddressService(addressService); int sum = customerService.sumInt(); assertEquals(39, sum);
+		 */
+	}
 
-    @Test
-    public void returnWithParams(){
-            when(mock.get(anyInt())).thenReturn("shashi");
-            assertEquals("shashi", mock.get(0));
-            assertEquals("shashi", mock.get(1));
-    }
+	@Test
+	public void testList() {
 
-    @Test
-    public void verificationBasics(){
-        String val = mock.get(0);
-        String val2 = mock.get(1);
-        verify(mock).get(0);
-        verify(mock).get(1);
-        verify(mock, atLeastOnce()).get(anyInt());
-        verify(mock, times(2)).get(anyInt());
-        verify(mock, atLeast(1)).get(anyInt());
-        verify(mock, atMost(2)).get(anyInt());
-        verify(mock, never()).get(10);
-    }
+		when(mock.size()).thenReturn(5).thenReturn(10);
+		assertEquals(5, mock.size());
+		assertEquals(10, mock.size());
+	}
 
-    @Test
-    public void argCapture(){
-        mock.add("shashi");
-        ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
-        verify(mock).add(argumentCaptor.capture());
-        assertEquals("shashi", argumentCaptor.getValue());
-    }
+	@Test
+	public void returnWithParams() {
+		when(mock.get(anyInt())).thenReturn("shashi");
+		assertEquals("shashi", mock.get(0));
+		assertEquals("shashi", mock.get(1));
+	}
 
-    @Test
-    public void spying(){
-        List arrayListMock = mock(ArrayList.class);
-    }
+	@Test
+	public void verificationBasics() {
+		String val = mock.get(0);
+		String val2 = mock.get(1);
+		verify(mock).get(0);
+		verify(mock).get(1);
+		verify(mock, atLeastOnce()).get(anyInt());
+		verify(mock, times(2)).get(anyInt());
+		verify(mock, atLeast(1)).get(anyInt());
+		verify(mock, atMost(2)).get(anyInt());
+		verify(mock, never()).get(10);
+	}
+
+	@Test
+	public void argCapture() {
+		mock.add("shashi");
+		ArgumentCaptor<String> argumentCaptor = ArgumentCaptor.forClass(String.class);
+		verify(mock).add(argumentCaptor.capture());
+		assertEquals("shashi", argumentCaptor.getValue());
+	}
+
+	@Test
+	public void spying() {
+		List arrayListMock = mock(ArrayList.class);
+	}
 
 }
