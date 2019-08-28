@@ -23,7 +23,7 @@ public class CartEntity implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name = "CUST_ID")
-	private CustomerEntity cuatomer;
+	private CustomerEntity customer;
 
 	@Column(name = "TOTAL")
 	private Long total;
