@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
 
 import com.wishcart.wishcart.domain.customer.persistence.CustomerEntity;
@@ -33,6 +34,7 @@ public class CustomerService {
 		});
 	}
 
+	@Secured({ "ROLE_ADMIN" })
 	public List<CustomerEntity> getAllCustomers() {
 		List<CustomerEntity> customers = customerRepository.findAll();
 		rabbitTemplate.convertAndSend(DEMO_QUEUE, customers);

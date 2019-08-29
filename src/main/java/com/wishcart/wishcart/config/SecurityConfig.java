@@ -1,48 +1,56 @@
 package com.wishcart.wishcart.config;
 
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 
 @EnableWebSecurity
 @Configuration
 @Slf4j
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@NonNull
-	private UserDetailsService userDetailsService;
+	private static final String REALM_NAME = "MY_TEST_REALM";
 
 	@Override
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
-		/*
-		 * auth.userDetailsService(userDetailsService) .passwordEncoder(encoder());
-		 */
-		auth.inMemoryAuthentication().passwordEncoder(encoder()).withUser("shashi").password("shashi").roles("USER",
-				"ADMIN");
-	}
 
-	@Bean
-	public PasswordEncoder encoder() {
-		return new BCryptPasswordEncoder();
+		auth.inMemoryAuthentication().withUser("shashi").password("{noop}123").roles("ADMIN");
+		auth.inMemoryAuthentication().withUser("reddy").password("{noop}258").roles("USER");
 	}
 
 	@Override
-	public void configure(HttpSecurity httpSecurity) {
+	protected void configure(HttpSecurity httpSecurity) {
 		try {
-			httpSecurity.csrf().disable().authorizeRequests().antMatchers("/admin/**").hasAnyRole("ADMIN").anyRequest()
-					.hasRole("USER").anyRequest().permitAll().and().httpBasic();
+			httpSecurity.csrf().disable().authorizeRequests().antMatchers("/*/**").hasAnyRole("ADMIN", "USER").and()
+					.httpBasic().realmName(REALM_NAME).authenticationEntryPoint(getBasicAuthEntryPoint()).and()
+					.sessionManagement().maximumSessions(1).sessionRegistry(sessionRegistry());
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Bean
+	public SessionRegistry sessionRegistry() {
+		return new SessionRegistryImpl();
+	}
+
+	@Override
+	public void configure(WebSecurity web) throws Exception {
+		web.ignoring().antMatchers(HttpMethod.OPTIONS, "/**");
+	}
+
+	@Bean
+	public CustomBasicAuthenticationEntryPoint getBasicAuthEntryPoint() {
+		return new CustomBasicAuthenticationEntryPoint();
 	}
 }
